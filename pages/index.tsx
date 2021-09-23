@@ -1,7 +1,7 @@
 import { Dialog, Transition } from '@headlessui/react'
 import { CogIcon, MenuIcon, XIcon } from '@heroicons/react/outline'
 import { ChevronLeftIcon } from '@heroicons/react/solid'
-import React, { Fragment, useEffect, useState } from 'react'
+import React, { Fragment, useState } from 'react'
 import { useS3Upload } from '../hooks/use-s3-upload'
 import users from '../mocks/users'
 
