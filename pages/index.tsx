@@ -1,7 +1,7 @@
 import { Dialog, Transition } from '@headlessui/react'
 import { CogIcon, MenuIcon, XIcon } from '@heroicons/react/outline'
 import { ChevronLeftIcon } from '@heroicons/react/solid'
-import React, { Fragment, useState } from 'react'
+import React, { Fragment, useEffect, useState } from 'react'
 import { useS3Upload } from '../hooks/use-s3-upload'
 
 const navigation = [{ name: 'Buckets', href: '#', icon: CogIcon }]
@@ -19,11 +19,22 @@ function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(' ')
 }
 
+function getLastFile(files: string | any[]) {
+  return files.at(-1)
+}
+
 export default function Example() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
 
   let [s3ImageUrl, setS3ImageUrl] = useState('')
-  let { FileInput, openFileDialog, uploadToS3 } = useS3Upload()
+  let { FileInput, openFileDialog, uploadToS3, files } = useS3Upload()
+  const [currentFile, setCurrentFile] = useState<any>(null)
+
+  useEffect(() => {
+    setCurrentFile(getLastFile(files))
+  }, [files])
+
+  console.log('currentfile', currentFile)
 
   let handleFileChange = async (file: File) => {
     let { url } = await uploadToS3(file)
@@ -224,6 +235,8 @@ export default function Example() {
                           />
                           <button onClick={openFileDialog}>Upload</button>
                         </div>
+
+                        <span className='ml-4'>{currentFile ? currentFile.progress : '0'}</span>
 
                         <span className='ml-4'>{s3ImageUrl}</span>
                       </div>

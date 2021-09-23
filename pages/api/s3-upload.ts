@@ -74,4 +74,4 @@ let missingEnvs = (): string[] => {
 
 let APIRoute = makeRouteHandler()
 
-export { APIRoute }
+export default APIRoute

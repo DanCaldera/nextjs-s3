@@ -90,6 +90,7 @@ export const useS3Upload = () => {
       let uploadResult = await s3Upload.promise()
 
       return {
+        files,
         url: uploadResult.Location,
         bucket: uploadResult.Bucket,
         key: uploadResult.Key
