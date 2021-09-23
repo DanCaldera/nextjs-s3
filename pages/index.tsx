@@ -32,7 +32,9 @@ export default function Example() {
   const [currentFile, setCurrentFile] = useState<any>(null)
 
   useEffect(() => {
-    setCurrentFile(getLastFile(files))
+    if (files.length) {
+      setCurrentFile(getLastFile(files))
+    }
   }, [files])
 
   let handleFileChange = async (file: File) => {
