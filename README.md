@@ -11,3 +11,5 @@ yarn
 
 yarn dev
 ```
+
+based on [next-s3-upload](https://github.com/ryanto/next-s3-upload)
