@@ -35,10 +35,8 @@ export default function Example() {
     setCurrentFile(getLastFile(files))
   }, [files])
 
-  console.log('currentfile', currentFile)
-
   let handleFileChange = async (file: File) => {
-    let { url } = await uploadToS3(file)
+    let { url } = await uploadToS3(file, `profile/${users[0].id}`)
     setS3ImageUrl(url)
   }
 
@@ -207,6 +205,8 @@ export default function Example() {
                 </div>
               </nav>
 
+              <span className='ml-4'>{currentFile ? currentFile.progress : '0'}</span>
+
               {/* Main content */}
               <div className='flex-1 max-h-screen xl:overflow-y-auto'>
                 <div className='max-w-3xl mx-auto py-10 px-4 sm:px-6 lg:py-12 lg:px-8'>
@@ -215,66 +215,6 @@ export default function Example() {
                   <div className='sm:col-span-6 py-4'>
                     <label htmlFor='photo' className='block text-sm font-medium text-blue-gray-900'>
                       Foto de Perfil
-                    </label>
-                    <div className='mt-1 flex items-center'>
-                      {s3ImageUrl ? (
-                        <img className='inline-block h-12 w-12 rounded-full' src={s3ImageUrl} alt='' />
-                      ) : (
-                        <img
-                          className='inline-block h-12 w-12 rounded-full'
-                          src='https://images.unsplash.com/photo-1550525811-e5869dd03032?ixlib=rb-1.2.1&auto=format&fit=facearea&facepad=2.5&w=256&h=256&q=80'
-                          alt=''
-                        />
-                      )}
-
-                      <div className='ml-4 flex'>
-                        <div className='relative bg-white py-2 px-3 border border-blue-gray-300 rounded-md shadow-sm flex items-center cursor-pointer hover:bg-blue-gray-50 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-offset-blue-gray-50 focus-within:ring-blue-500'>
-                          <span className='sr-only'> user photo</span>
-                          <FileInput
-                            onChange={handleFileChange}
-                            className='absolute inset-0 w-full h-full opacity-0 cursor-pointer border-gray-300 rounded-md'
-                          />
-                          <button onClick={openFileDialog}>Upload</button>
-                        </div>
-
-                        <span className='ml-4'>{currentFile ? currentFile.progress : '0'}</span>
-
-                        <span className='ml-4'>{s3ImageUrl}</span>
-                      </div>
-                    </div>
-                  </div>
-                  <div className='sm:col-span-6 py-4'>
-                    <label htmlFor='photo' className='block text-sm font-medium text-blue-gray-900'>
-                      Publicación
-                    </label>
-                    <div className='mt-1 flex items-center'>
-                      {s3ImageUrl ? (
-                        <img className='inline-block h-12 w-12 rounded-full' src={s3ImageUrl} alt='' />
-                      ) : (
-                        <img
-                          className='inline-block h-12 w-12 rounded-full'
-                          src='https://images.unsplash.com/photo-1550525811-e5869dd03032?ixlib=rb-1.2.1&auto=format&fit=facearea&facepad=2.5&w=256&h=256&q=80'
-                          alt=''
-                        />
-                      )}
-
-                      <div className='ml-4 flex'>
-                        <div className='relative bg-white py-2 px-3 border border-blue-gray-300 rounded-md shadow-sm flex items-center cursor-pointer hover:bg-blue-gray-50 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-offset-blue-gray-50 focus-within:ring-blue-500'>
-                          <span className='sr-only'> user photo</span>
-                          <FileInput
-                            onChange={handleFileChange}
-                            className='absolute inset-0 w-full h-full opacity-0 cursor-pointer border-gray-300 rounded-md'
-                          />
-                          <button onClick={openFileDialog}>Upload</button>
-                        </div>
-
-                        <span className='ml-4'>{s3ImageUrl}</span>
-                      </div>
-                    </div>
-                  </div>
-                  <div className='sm:col-span-6 py-4'>
-                    <label htmlFor='photo' className='block text-sm font-medium text-blue-gray-900'>
-                      Respuesta
                     </label>
                     <div className='mt-1 flex items-center'>
                       {s3ImageUrl ? (
