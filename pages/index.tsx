@@ -28,10 +28,10 @@ export default function Example() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
 
   let [s3ImageUrl, setS3ImageUrl] = useState('')
-  let { FileInput, openFileDialog, uploadToS3, files } = useS3Upload()
+  let { FileInput, openFileDialog, uploadToS3, currentFile } = useS3Upload()
   // const [currentFile, setCurrentFile] = useState<any>(null)
 
-  console.log(files)
+  console.log('current', currentFile)
 
   // useEffect(() => {
   //   if (files.length) {
@@ -209,7 +209,7 @@ export default function Example() {
                 </div>
               </nav>
 
-              {/* <span className='ml-4'>{currentFile ? currentFile.progress : '0'}</span> */}
+              <span className='ml-4'>{currentFile ? currentFile.progress : '0'}</span>
 
               {/* Main content */}
               <div className='flex-1 max-h-screen xl:overflow-y-auto'>

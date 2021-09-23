@@ -27,6 +27,7 @@ type TrackedFile = {
 export const useS3Upload = () => {
   let ref = useRef<HTMLInputElement>()
   let [files, setFiles] = useState<TrackedFile[]>([])
+  let [currentFile, setCurrentFile] = useState<TrackedFile>()
 
   let openFileDialog = () => {
     if (ref.current) {
@@ -69,9 +70,16 @@ export const useS3Upload = () => {
       let s3Upload = s3.upload(params)
 
       setFiles(files => [...files, { file, progress: 0, uploaded: 0, size: file.size }])
+      setCurrentFile({ file, progress: 0, uploaded: 0, size: file.size })
 
       s3Upload.on('httpUploadProgress', event => {
         if (event.total) {
+          setCurrentFile({
+            file,
+            uploaded: event.loaded,
+            size: event.total,
+            progress: (event.loaded / event.total) * 100
+          })
           setFiles(files =>
             files.map(trackedFile =>
               trackedFile.file === file
@@ -102,6 +110,7 @@ export const useS3Upload = () => {
     FileInput: (props: any) => <FileInput {...props} ref={ref} style={{ display: 'none' }} />,
     openFileDialog,
     uploadToS3,
+    currentFile,
     files
   }
 }
